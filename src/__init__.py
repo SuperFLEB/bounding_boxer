@@ -11,13 +11,6 @@ _LOADED = True
 
 package_name = __package__
 
-# Search/Replace terms to customize this template:
-# - bounding_boxer -> Operator prefix and some file naming
-# - BoundingBoxer -> Class/variable name prefix
-# - Bounding Boxer -> The full name of the addon
-# - Make bounding box around all objects including collection instances -> Descriptions
-# - FLEB (a.k.a. SuperFLEB) -> Your name
-
 bl_info = {
     "name": "Bounding Boxer",
     "description": "Make bounding box around all objects including collection instances",
@@ -26,12 +19,9 @@ bl_info = {
     "blender": (3, 1, 0),
     "location": "View3D > Object",
     "warning": "", # used for warning icon and text in addons panel
-    "doc_url": "https://github.com/{USERNAME}/{REPONAME}",
-    "tracker_url": "https://github.com/{USERNAME}/{REPONAME}/issues",
+    "doc_url": "https://github.com/SuperFLEB/bounding_boxer",
+    "tracker_url": "https://github.com/SuperFLEB/bounding_boxer/issues",
     "support": "COMMUNITY",
-    # Categories:
-    # 3D View, Add Curve, Add Mesh, Animation, Compositing, Development, Game Engine, Import-Export, Lighting, Material,
-    # Mesh, Node, Object, Paint, Physics, Render, Rigging, Scene, Sequencer, System, Text Editor, UV, User Interface
     "category": "Object",
 }
 

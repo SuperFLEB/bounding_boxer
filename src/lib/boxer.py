@@ -51,6 +51,8 @@ def bounds_box(extremes: tuple[Vector, Vector], name="boundbox") -> bpy.types.Ob
     Create a bounding rectangular prism from two Vector points indicating extremes.
     Note that this may create an imperfect bounding box if objects are rotated. See the note on get_extremes.
     """
+    # Each vertex is a binary (min or max) on 3 axes, so the first 3 bits of range(8) will iterate all possibilities
+    # 0b001: x, 0b010: y, 0b100: z
     vertices = [[extremes[(n >> bit) & 1][bit] for bit in range(3)] for n in range(8)]
     faces = (
         (0, 4, 6, 2),
