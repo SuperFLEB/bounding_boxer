@@ -5,7 +5,6 @@ from . import util
 
 
 def _get_extremes_vectors(vectors: Iterable[Vector]) -> tuple[Vector, Vector]:
-    print("GEV", vectors)
     min = [float("inf"), float("inf"), float("inf")]
     max = [-float("inf"), -float("inf"), -float("inf")]
     for vec in vectors:
@@ -15,7 +14,15 @@ def _get_extremes_vectors(vectors: Iterable[Vector]) -> tuple[Vector, Vector]:
     return Vector(min), Vector(max)
 
 
-def get_extremes(obj: bpy.types.Object, ttl: int = 20) -> tuple[Vector, Vector]:
+def _get_points(obj: bpy.types.Object, mesh_precision: bool = False) -> list[Vector]:
+    data_type = type(obj.data)
+    if mesh_precision and type(obj.data) is bpy.types.Mesh:
+        return [v.co for v in obj.data.vertices]
+    else:
+        return [Vector(corner) for corner in obj.bound_box]
+
+
+def get_extremes(obj: bpy.types.Object, mesh_precision: bool = False, ttl: int = 20) -> tuple[Vector, Vector]:
     """
     Find the extremes of the object, deeply incorporating instanced collections
     Note that this creates an imperfect bounding box in cases where rotation would change the world-axis
@@ -27,7 +34,8 @@ def get_extremes(obj: bpy.types.Object, ttl: int = 20) -> tuple[Vector, Vector]:
     # TODO: Other sorts of parenting/instancing, too?
     if obj.instance_collection is None:
         # Regular object
-        return _get_extremes_vectors([obj.matrix_local @ Vector(pt) for pt in obj.bound_box])
+        points = _get_points(obj, mesh_precision=mesh_precision)
+        return _get_extremes_vectors([obj.matrix_world @ Vector(pt) for pt in points])
 
     extremes = []
     # Collection Instance

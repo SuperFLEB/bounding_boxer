@@ -9,7 +9,7 @@ from ..lib import util
 if "_LOADED" in locals():
     import importlib
 
-    for mod in (pkginfo,boxer,util,):  # list all imports here
+    for mod in (pkginfo, boxer, util,):  # list all imports here
         importlib.reload(mod)
 _LOADED = True
 
@@ -22,6 +22,11 @@ class BoundingBoxer(Operator):
     bl_label = "Bounding Boxer"
     bl_options = {'REGISTER', 'UNDO'}
 
+    mesh_precision: BoolProperty(name="High-Precision Bounds on Rotated Meshes",
+                                  description="Consider all points, not just bounding-box corners, so rotated meshes "
+                                              "with non-square corners are calculated correctly. Increases processing.",
+                                 default=True)
+
     @classmethod
     def poll(cls, context) -> bool:
         if len(bpy.context.selected_objects) != 1:
@@ -31,7 +36,7 @@ class BoundingBoxer(Operator):
 
     def execute(self, context) -> Set[str]:
         sel_obj = bpy.context.selected_objects[0]
-        extremes = boxer.get_extremes(sel_obj)
+        extremes = boxer.get_extremes(sel_obj, mesh_precision=self.mesh_precision)
         box = boxer.bounds_box(extremes)
         dims = extremes[1] - extremes[0]
         box.display_type = "WIRE"
