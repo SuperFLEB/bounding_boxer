@@ -4,7 +4,7 @@ https://github.com/SuperFLEB/bounding_boxer
 
 A Blender addon that creates a bounding box around an object, including any instanced collections.
 
-This was a quick-and-dirty addon made to test, tweak, and visualize the code in `lib/boxer.py`, so I
+This was a quick-and-dirty addon made to test, tweak, and visualize the code in [lib/boxer.py](lib/boxer.py), so I
 could use it in the [Kiro](https://github.com/SuperFLEB/kiro) project to measure collection instances
 for proper spacing (because Collection Instances present themselves present as single-point Empty objects).
 
